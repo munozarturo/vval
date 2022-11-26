@@ -1,0 +1,30 @@
+# pyproject.toml
+
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vval"
+version = "1.0.0"
+description = "Python value validation library."
+readme = "README.md"
+authors = [{ name = "Arturo Munoz", email = "munoz.arturoroman@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: Apache 2.0 License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["validation", "value", "input"]
+dependencies = [
+    "varname",
+    "typing-inspect",
+]
+requires-python = ">=3.10.7"
+
+[project.optional-dependencies]
+dev = []
+
+[project.urls]
+Homepage = "https://github.com/munozarturo/vval-py"

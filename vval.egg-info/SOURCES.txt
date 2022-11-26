@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+vval.egg-info/PKG-INFO
+vval.egg-info/SOURCES.txt
+vval.egg-info/dependency_links.txt
+vval.egg-info/requires.txt
+vval.egg-info/top_level.txt
