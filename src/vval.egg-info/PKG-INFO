@@ -207,7 +207,7 @@ License:                                  Apache License
         
 Project-URL: Homepage, https://github.com/munozarturo/vval-py
 Keywords: validation,value,input
-Classifier: License :: OSI Approved :: Apache 2.0 License
+Classifier: License :: OSI Approved :: Apache Software License
 Classifier: Programming Language :: Python
 Classifier: Programming Language :: Python :: 3
 Requires-Python: >=3.10.7
