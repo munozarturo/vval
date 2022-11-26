@@ -1,5 +1,5 @@
 from typing import Any, Callable, Union
-from validate import is_callable, is_iterable, is_union, extract_types, validate, validate_iterable, validate_single
+from vval import is_callable, is_iterable, is_union, extract_types, validate, validate_iterable, validate_single
 
 
 def assert_true(value: bool, message: str = ""):
