@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/errors/__init__.py
+src/errors/errors.py
+src/validate/__main__.py
+src/validate/value/__init__.py
+src/validate/value/validate.py
+src/vval.egg-info/PKG-INFO
+src/vval.egg-info/SOURCES.txt
+src/vval.egg-info/dependency_links.txt
+src/vval.egg-info/requires.txt
+src/vval.egg-info/top_level.txt
