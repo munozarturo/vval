@@ -1,5 +1,5 @@
 from typing import Any, Callable, Union
-from vval import is_callable, is_iterable, is_union, extract_types, validate, validate_iterable, validate_single
+from vval import is_callable, is_iterable, is_union, __extract_types, validate, validate_iterable, __validate_single
 
 
 def assert_true(value: bool, message: str = ""):
@@ -104,23 +104,23 @@ assert_false(is_union(str | int))
 assert_false(is_union((list, int)))
 
 """
-Test extract_types.    
+Test __extract_types.    
 """
-assert_equal(extract_types([int, str, float]), [int, str, float])
-assert_equal(extract_types([int, str, list[int]]), [int, str, list[int]])
-assert_equal(extract_types([int, [str, [bool, float, Callable]]]), [
+assert_equal(__extract_types([int, str, float]), [int, str, float])
+assert_equal(__extract_types([int, str, list[int]]), [int, str, list[int]])
+assert_equal(__extract_types([int, [str, [bool, float, Callable]]]), [
              int, str, bool, float, Callable])
-assert_equal(extract_types([int, [str, Union[bool, float, Callable]]]), [
+assert_equal(__extract_types([int, [str, Union[bool, float, Callable]]]), [
              int, str, bool, float, Callable])
 
-assert_raises(TypeError, extract_types, [int, str, 5])
-assert_raises(TypeError, extract_types, int)
+assert_raises(TypeError, __extract_types, [int, str, 5])
+assert_raises(TypeError, __extract_types, int)
 
 """
-Test validate_single.
+Test __validate_single.
 """
-assert_true(validate_single(5, int))
-assert_false(validate_single(5, str))
+assert_true(__validate_single(5, int))
+assert_false(__validate_single(5, str))
 
 """
 Test validate.

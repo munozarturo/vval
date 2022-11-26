@@ -1,1 +1,1 @@
-from vval import validate, validate_single, validate_iterable
+from vval import validate, validate_iterable
