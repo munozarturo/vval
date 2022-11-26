@@ -58,7 +58,7 @@ def is_callable(obj: Any) -> bool:
     return callable(obj)
 
 
-def extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]]) -> list[type | Type | UnionType]:
+def __extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]]) -> list[type | Type | UnionType]:
     """
     Extract all types from an iterable of types.
 
@@ -96,7 +96,7 @@ def extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type | 
             types += list(get_args(type_))
         # if type_ is an iterable, add all types to types
         elif is_iterable(type_):
-            types += extract_types(type_)
+            types += __extract_types(type_)
         else:
             raise TypeError(
                 f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'.")
@@ -105,7 +105,7 @@ def extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type | 
     return types
 
 
-def validate_single(value: Any, type_: type | Type | Callable) -> bool:
+def __validate_single(value: Any, type_: type | Type | Callable) -> bool:
     """
     Check if `value` is of type `type_`.
 
@@ -163,7 +163,7 @@ def validate(value: Any,
             allowed_types += list(get_args(type_))
         else:
             # extract types from type_
-            allowed_types = extract_types(type_)
+            allowed_types = __extract_types(type_)
     # if type_ is a single type then append it to the list
     elif isinstance(type_, Type) or isinstance(type_, type):
         allowed_types.append(type_)
@@ -173,7 +173,7 @@ def validate(value: Any,
 
     # check if value is of any of the allowed types
     for type_ in allowed_types:
-        if validate_single(value, type_):
+        if __validate_single(value, type_):
             return True
 
     # if value is not of any of the allowed types raise an error
