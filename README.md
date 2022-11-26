@@ -44,11 +44,12 @@ Functionality:
 from typing import Callable, Union
 from vval import validate, validate_iterable
 
+y: list = [1, 2, 3]
+validate(y, list) # True
+
 x: list = [1, 2, 3]
 validate(x, int)
 ```
-
-Will raise:
 
 ```text
 ...
