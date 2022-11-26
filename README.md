@@ -37,3 +37,20 @@ Currently provided functions:
 
 * ``validate``: Validate that an element is of a specified type.
 * ``validate_iterable``: Validate that all elements in an iterable are of a specified type.
+
+Functionality:
+
+```python
+from typing import Callable, Union
+from vval import validate, validate_iterable
+
+x: list = [1, 2, 3]
+validate(x, int)
+```
+
+Will raise:
+
+```text
+...
+TypeError: Expected 'int' for `x`, got: 'list'.
+```
