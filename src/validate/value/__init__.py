@@ -1,1 +1,0 @@
-from input.validate import validate, validate_single, validate_iterable

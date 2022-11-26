@@ -1,4 +1,0 @@
-varname
-typing-inspect
-
-[dev]

@@ -2,7 +2,16 @@ from varname import argname
 from typing import Callable, Type, Union, Any, get_origin, get_args, Iterable
 from types import UnionType
 from typing_inspect import is_generic_type as is_generic
-from errors import ValidationError
+
+
+class Error(Exception):
+    """Base class for exceptions in this module."""
+    pass
+
+
+class ValidationError(Error):
+    """Base class for validation exceptions."""
+    pass
 
 
 def is_union(obj: Any) -> bool:
