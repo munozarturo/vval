@@ -6,11 +6,13 @@ from typing_inspect import is_generic_type as is_generic
 
 class Error(Exception):
     """Base class for exceptions in this module."""
+
     pass
 
 
 class ValidationError(Error):
     """Base class for validation exceptions."""
+
     pass
 
 
@@ -58,7 +60,9 @@ def is_callable(obj: Any) -> bool:
     return callable(obj)
 
 
-def __extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]]) -> list[type | Type | UnionType]:
+def __extract_types(
+    type_iter: Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]],
+) -> list[type | Type | UnionType]:
     """
     Extract all types from an iterable of types.
 
@@ -77,7 +81,8 @@ def __extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type 
     # validate iterable
     if not isinstance(type_iter, Iterable):
         raise TypeError(
-            f"Expected 'Iterable' for `type_iter` got: '{type(type_iter)}'.")
+            f"Expected 'Iterable' for `type_iter` got: '{type(type_iter)}'."
+        )
 
     # list of types
     types: list[type | Type | UnionType] = []
@@ -99,7 +104,8 @@ def __extract_types(type_iter: Iterable[type | Type | UnionType | Iterable[type 
             types += __extract_types(type_)
         else:
             raise TypeError(
-                f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'.")
+                f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'."
+            )
 
     # return types
     return types
@@ -128,14 +134,16 @@ def __validate_single(value: Any, type_: type | Type | Callable) -> bool:
         return isinstance(value, type_)
     else:
         # else raise an error
-        raise ValueError(
-            f"Expected 'type' or 'Type' for `type_` got: '{type(type_)}'.")
+        raise ValueError(f"Expected 'type' or 'Type' for `type_` got: '{type(type_)}'.")
 
 
-def validate(value: Any,
-             type_: type | Type | UnionType | Iterable[type |
-                                                       Type | UnionType | Iterable[type | Type | UnionType]]
-             ) -> bool:
+def validate(
+    value: Any,
+    type_: type
+    | Type
+    | UnionType
+    | Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]],
+) -> bool:
     """
     Validate that `value` is of type 'type_'.
 
@@ -165,11 +173,16 @@ def validate(value: Any,
             # extract types from type_
             allowed_types = __extract_types(type_)
     # if type_ is a single type then append it to the list
-    elif isinstance(type_, Type) or isinstance(type_, type):
+    elif (
+        isinstance(type_, Type)
+        or isinstance(type_, type)
+        or isinstance(type_, Callable)
+    ):
         allowed_types.append(type_)
     else:
         raise TypeError(
-            f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'.")
+            f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'."
+        )
 
     # check if value is of any of the allowed types
     for type_ in allowed_types:
@@ -177,21 +190,22 @@ def validate(value: Any,
             return True
 
     # if value is not of any of the allowed types raise an error
-    _expected: str = ", ".join([str(type_.__name__)
-                               for type_ in allowed_types])
+    _expected: str = ", ".join([str(type_.__name__) for type_ in allowed_types])
 
     try:
-        var_name: str = argname('value')
+        var_name: str = argname("value")
     except Exception:
-        var_name: str = 'value'
+        var_name: str = "value"
 
     raise TypeError(
-        f"Expected '{_expected}' for `{var_name}`, got: '{type(value).__name__}'.")
+        f"Expected '{_expected}' for `{var_name}`, got: '{type(value).__name__}'."
+    )
 
 
-def validate_iterable(iter_: Iterable,
-                      type_: type | Type | UnionType | Iterable[type | Type | UnionType],
-                      ) -> bool:
+def validate_iterable(
+    iter_: Iterable,
+    type_: type | Type | UnionType | Iterable[type | Type | UnionType],
+) -> bool:
     """
     Check if the contents of `iter_` are of type `type_`.
 
@@ -208,7 +222,8 @@ def validate_iterable(iter_: Iterable,
     # if iter_ is not an iterable raise an error
     if not is_iterable(iter_):
         raise TypeError(
-            f"Expected 'Iterable' for `iter_`, got: '{type(iter_).__name__}'.")
+            f"Expected 'Iterable' for `iter_`, got: '{type(iter_).__name__}'."
+        )
 
     # validate every value in iter against type_
     for value in iter_:
@@ -216,3 +231,25 @@ def validate_iterable(iter_: Iterable,
 
     # return True
     return True
+
+
+def validate_option(value: Any, options: Iterable[Any]):
+    """
+    Validate that `value` is one of the values in `options`.
+
+    Args:
+        value (Any): Value.
+        options (Iterable[Any]): Iterable of values.
+
+    Raises:
+        ValueError: If `value` is not in `options`.
+    """
+    # if options is not an iterable raise an error
+    if not isinstance(options, Iterable):
+        raise TypeError(
+            f"Expected 'Iterable' for `options`, got: '{type(options).__name__}'."
+        )
+
+    # raise an error if value is not in options
+    if not value in options:
+        raise ValueError(f"Expected one of {','.join(options)}, got: '{value}'.")
