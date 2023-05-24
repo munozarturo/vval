@@ -1,14 +1,14 @@
-# vval-py
+# Value Validate (vval)
 
 The ``vval`` module provides functions for input validation in python.
 
-Installation:
+## Installation
 
 ```shell
 pip install vval
 ```
 
-Usage:
+## Usage
 
 ```python
 from typing import Callable, Union
@@ -36,8 +36,9 @@ def j(x: list[int | str | dict | Union[float, Callable]]) -> None:
 ```
 
 Note: The API is still experimental.
-      Will not validate beyond a certain depth.
-      Will not validate generic types (except Union).  
+
+* Will not validate beyond a certain depth.
+* Will not validate generic types (except Union).  
 
 Currently provided functions:
 
@@ -54,7 +55,7 @@ y: list = [1, 2, 3]
 validate(y, list) # True
 
 x: list = [1, 2, 3]
-validate(x, int)
+validate(x, int) # False
 ```
 
 ```text
