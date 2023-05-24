@@ -2,7 +2,13 @@
 
 The ``vval`` module provides functions for input validation in python.
 
-Example usage:
+Installation:
+
+```shell
+pip install vval==2.0.0
+```
+
+Usage:
 
 ```python
 from typing import Callable, Union
