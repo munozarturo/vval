@@ -5,7 +5,7 @@ The ``vval`` module provides functions for input validation in python.
 Installation:
 
 ```shell
-pip install vval==2.0.0
+pip install vval
 ```
 
 Usage:
