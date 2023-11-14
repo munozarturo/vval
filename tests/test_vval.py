@@ -5,6 +5,7 @@ from vval.vval import (
     validate,
     validate_iterable,
     validate_option,
+    validate_filter,
     is_union,
     is_iterable,
     is_generic,
@@ -253,3 +254,50 @@ def test_validate_option_with_varied_types():
     validate_option(3.14, [1, "two", 3.14, (4, 5)])
     with pytest.raises(ValueError):
         validate_option((4, 5), [1, "two", 3.14])
+
+
+def is_positive(num):
+    return num > 0
+
+
+def is_non_empty_string(value):
+    return isinstance(value, str) and len(value) > 0
+
+
+def test_validate_filter_with_valid_value():
+    validate_filter(5, is_positive)
+    validate_filter("hello", is_non_empty_string)
+
+
+def test_validate_filter_with_invalid_value():
+    with pytest.raises(ValueError):
+        validate_filter(-3, is_positive)
+    with pytest.raises(ValueError):
+        validate_filter("", is_non_empty_string)
+
+
+def test_validate_filter_with_non_callable_filter():
+    with pytest.raises(TypeError):
+        validate_filter(5, "not a callable")
+
+
+def test_validate_filter_with_lambda():
+    validate_filter(10, lambda x: x % 2 == 0)  # Even number
+    with pytest.raises(ValueError):
+        validate_filter(5, lambda x: x % 2 == 0)  # Odd number
+
+
+def test_validate_filter_with_complex_callable():
+    def complex_filter(value):
+        if isinstance(value, int):
+            return value % 3 == 0
+        elif isinstance(value, str):
+            return "a" in value
+        return False
+
+    validate_filter(9, complex_filter)
+    validate_filter("apple", complex_filter)
+    with pytest.raises(ValueError):
+        validate_filter(10, complex_filter)
+    with pytest.raises(ValueError):
+        validate_filter("hello", complex_filter)
