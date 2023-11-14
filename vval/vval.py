@@ -233,7 +233,7 @@ def validate_iterable(
     return True
 
 
-def validate_option(value: Any, options: Iterable[Any]):
+def validate_option(value: Any, options: Iterable[Any]) -> None:
     """
     Validate that `value` is one of the values in `options`.
 
@@ -251,5 +251,9 @@ def validate_option(value: Any, options: Iterable[Any]):
         )
 
     # raise an error if value is not in options
-    if not value in options:
+    if value not in options:
         raise ValueError(f"Expected one of {','.join(options)}, got: '{value}'.")
+
+
+def validate_filter(value: Any, filter: Callable[[Any], bool]) -> None:
+    return
