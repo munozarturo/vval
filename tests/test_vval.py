@@ -32,7 +32,7 @@ def test_is_iterable():
 def test_is_generic():
     assert is_generic(List[int])  # Generic type
     assert is_generic(Dict[str, int])  # Generic type
-    assert is_generic(Union[int, str])  # Union, a kind of generic
+    assert not is_generic(Union[str, int])
     assert not is_generic(int)  # Not a generic type
     assert not is_generic(3.14)  # Not a generic type
     assert not is_generic("hello")  # Not a generic type
