@@ -164,14 +164,12 @@ def validate(
     # list of allowed types
     allowed_types: list[type | Type] = []
 
+    if is_union(type_):
+        allowed_types += list(get_args(type_))
     # if type_ is an iterable, add all types to allowed_types
-    if is_iterable(type_):
-        # if type_ is a Union get all union types
-        if is_union(type_):
-            allowed_types += list(get_args(type_))
-        else:
-            # extract types from type_
-            allowed_types = _extract_types(type_)
+    elif is_iterable(type_):
+        # extract types from type_
+        allowed_types = _extract_types(type_)
     # if type_ is a single type then append it to the list
     elif (
         isinstance(type_, Type)

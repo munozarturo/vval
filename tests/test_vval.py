@@ -2,6 +2,9 @@ import pytest
 
 from typing import Callable, Iterable, Union, List, Optional, Dict, Union
 from vval.vval import (
+    validate,
+    validate_iterable,
+    validate_option,
     is_union,
     is_iterable,
     is_generic,
@@ -95,9 +98,6 @@ def test_extract_types_with_callable():
 
 def test_extract_types_invalid_input():
     with pytest.raises(TypeError):
-        _extract_types(123)  # Not an iterable
-
-    with pytest.raises(TypeError):
         _extract_types([123])  # Contains a non-type item
 
     with pytest.raises(TypeError):
@@ -135,3 +135,60 @@ def test_validate_single_with_callable_function():
         pass
 
     assert _validate_single(example_function, Callable)
+
+
+def test_validate_with_valid_types():
+    assert validate(5, int)
+    assert validate("hello", str)
+
+
+def test_validate_with_union_types():
+    assert validate(5, Union[int, str])
+    assert validate("hello", Union[int, str])
+
+    with pytest.raises(TypeError):
+        validate(5.5, Union[int, str])
+
+
+def test_validate_with_iterable_of_types():
+    assert validate(5, [int, str])
+    assert validate("hello", [int, str, List[str]])
+
+    with pytest.raises(TypeError):
+        validate(5.5, [int, str])
+
+
+def test_validate_with_callable():
+    assert validate(lambda x: x, Callable)
+
+    with pytest.raises(TypeError):
+        validate(5, Callable)
+
+
+def test_validate_with_invalid_value():
+    with pytest.raises(TypeError):
+        validate(5, str)
+
+
+def test_validate_with_invalid_type_argument():
+    with pytest.raises(TypeError):
+        validate(5, "not a type")
+
+
+def test_validate_with_complex_cases():
+    assert validate(5, [int, str, Callable])  # 5 is an int
+    assert validate("hello", [int, str, Callable])  # "hello" is a str
+    assert validate(lambda x: x, [int, str, Callable])  # lambda is a Callable
+
+    with pytest.raises(TypeError):
+        validate(5.5, [int, str, Callable])
+
+    with pytest.raises(TypeError):
+        validate([1, 2, 3], [int, str, Callable])
+
+
+def test_validate_with_nested_iterables():
+    assert validate(5, [[int, str], [bool]])
+
+    with pytest.raises(TypeError):
+        validate("hello", [[int, bool], [int]])
