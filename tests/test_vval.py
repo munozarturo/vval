@@ -62,35 +62,35 @@ def test_extract_types_simple_types():
     assert _extract_types([List]) == [List]
 
 
-# def test_extract_types_union_types():
-#     assert _extract_types([Union[int, str]]) == [int, str]
-#     assert _extract_types([Union[List, Dict]]) == [List, Dict]
+def test_extract_types_union_types():
+    assert _extract_types([Union[int, str]]) == [int, str]
+    assert _extract_types([Union[List, Dict]]) == [List, Dict]
 
 
-# def test_extract_types_nested_iterables():
-#     assert _extract_types([[int, str], [bool]]) == [int, str, bool]
-#     assert _extract_types([Iterable[int], [Union[str, bytes]]]) == [
-#         Iterable[int],
-#         str,
-#         bytes,
-#     ]
+def test_extract_types_nested_iterables():
+    assert _extract_types([[int, str], [bool]]) == [int, str, bool]
+    assert _extract_types([Iterable[int], [Union[str, bytes]]]) == [
+        Iterable[int],
+        str,
+        bytes,
+    ]
 
 
-# def test_extract_types_with_callable():
-#     assert _extract_types([Callable, [int, Union[str, float]]]) == [
-#         Callable,
-#         int,
-#         str,
-#         float,
-#     ]
+def test_extract_types_with_callable():
+    assert _extract_types([Callable, [int, Union[str, float]]]) == [
+        Callable,
+        int,
+        str,
+        float,
+    ]
 
 
-# def test_extract_types_invalid_input():
-#     with pytest.raises(TypeError):
-#         _extract_types(123)  # Not an iterable
+def test_extract_types_invalid_input():
+    with pytest.raises(TypeError):
+        _extract_types(123)  # Not an iterable
 
-#     with pytest.raises(TypeError):
-#         _extract_types([123])  # Contains a non-type item
+    with pytest.raises(TypeError):
+        _extract_types([123])  # Contains a non-type item
 
-#     with pytest.raises(TypeError):
-#         _extract_types(["string"])  # String is not a type
+    with pytest.raises(TypeError):
+        _extract_types(["string"])  # String is not a type

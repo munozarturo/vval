@@ -79,7 +79,7 @@ def _extract_types(
         reason there is a function `validate_iterable` that can be used instead.
     """
     # validate iterable
-    if not isinstance(type_iter, Iterable):
+    if not isinstance(type_iter, Iterable) or isinstance(type_iter, (str, bytes)):
         raise TypeError(
             f"Expected 'Iterable' for `type_iter` got: '{type(type_iter)}'."
         )
