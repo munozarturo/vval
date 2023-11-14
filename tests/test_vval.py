@@ -36,3 +36,20 @@ def test_is_generic():
     assert not is_generic(int)  # Not a generic type
     assert not is_generic(3.14)  # Not a generic type
     assert not is_generic("hello")  # Not a generic type
+
+
+def test_is_callable():
+    assert is_callable(lambda x: x)  # Lambdas are callable
+    assert is_callable(print)  # Built-in functions are callable
+    assert is_callable(is_callable)  # The function itself is callable
+
+    class MyClass:
+        def __call__(self):
+            pass
+
+    assert is_callable(MyClass)  # Classes are callable
+    assert is_callable(MyClass())  # Instances with a __call__ method are callable
+
+    assert not is_callable(42)  # Integers are not callable
+    assert not is_callable(None)  # None is not callable
+    assert not is_callable([1, 2, 3])  # Lists are not callable
