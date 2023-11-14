@@ -192,3 +192,36 @@ def test_validate_with_nested_iterables():
 
     with pytest.raises(TypeError):
         validate("hello", [[int, bool], [int]])
+
+
+def test_validate_iterable_with_valid_elements():
+    assert validate_iterable([1, 2, 3], int)
+    assert validate_iterable(["a", "b", "c"], str)
+    assert validate_iterable([1, "two", 3.0], Union[int, str, float])
+
+
+def test_validate_iterable_with_mixed_elements():
+    with pytest.raises(TypeError):
+        validate_iterable([1, "two", None], int)
+
+
+def test_validate_iterable_with_invalid_elements():
+    with pytest.raises(TypeError):
+        validate_iterable([1, 2, "three"], int)
+
+
+def test_validate_iterable_with_callable_elements():
+    assert validate_iterable([lambda x: x, print, sum], Callable)
+
+
+def test_validate_iterable_with_empty_iterable():
+    assert validate_iterable([], int)  # Assuming empty iterable is considered valid
+
+
+def test_validate_iterable_with_non_iterable_input():
+    with pytest.raises(TypeError):
+        validate_iterable(123, int)
+
+
+def test_validate_iterable_with_complex_types():
+    assert validate_iterable([(1, "a"), (2, "b")], tuple)
