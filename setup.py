@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="vval",
-    version="2.0.1",
+    version="2.1.0",
     author="Arturo Munoz",
     author_email="munoz.arturoroman@gmail.com",
     description="Input validation in Python",
