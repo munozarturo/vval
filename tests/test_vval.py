@@ -225,3 +225,31 @@ def test_validate_iterable_with_non_iterable_input():
 
 def test_validate_iterable_with_complex_types():
     assert validate_iterable([(1, "a"), (2, "b")], tuple)
+
+
+def test_validate_option_with_valid_value():
+    validate_option("apple", ["apple", "banana", "cherry"])
+    validate_option(5, [1, 2, 3, 4, 5])
+
+
+def test_validate_option_with_invalid_value():
+    with pytest.raises(ValueError):
+        validate_option("orange", ["apple", "banana", "cherry"])
+    with pytest.raises(ValueError):
+        validate_option(10, [1, 2, 3, 4, 5])
+
+
+def test_validate_option_with_non_iterable_options():
+    with pytest.raises(TypeError):
+        validate_option("apple", "not an iterable")
+
+
+def test_validate_option_with_empty_options():
+    with pytest.raises(ValueError):
+        validate_option("apple", [])
+
+
+def test_validate_option_with_varied_types():
+    validate_option(3.14, [1, "two", 3.14, (4, 5)])
+    with pytest.raises(ValueError):
+        validate_option((4, 5), [1, "two", 3.14])

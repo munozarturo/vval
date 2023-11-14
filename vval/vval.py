@@ -254,4 +254,25 @@ def validate_option(value: Any, options: Iterable[Any]) -> None:
 
 
 def validate_filter(value: Any, filter: Callable[[Any], bool]) -> None:
-    return
+    """
+    Validate that `value` passes a filter `filter`.
+
+    Args:
+        value (Any): Value.
+        filter (Callable[[Any], bool]): Filter to pass.
+
+    Raises:
+        ValueError: If `value` does not pass `filter`.
+    """
+    # if filter is not callable
+    if not is_callable(filter):
+        raise TypeError(
+            f"Expected 'Callable' for `filter`, got: '{type(filter).__name__}'."
+        )
+
+    if not filter(value):
+        # Attempt to get the name of the filter function
+        filter_name = getattr(filter, "__name__", str(filter))
+        raise ValueError(
+            f"The value '{value}' does not pass the filter condition defined by '{filter_name}'."
+        )
