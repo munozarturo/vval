@@ -111,7 +111,7 @@ def _extract_types(
     return types
 
 
-def __validate_single(value: Any, type_: type | Type | Callable) -> bool:
+def _validate_single(value: Any, type_: type | Type | Callable) -> bool:
     """
     Check if `value` is of type `type_`.
 
@@ -186,7 +186,7 @@ def validate(
 
     # check if value is of any of the allowed types
     for type_ in allowed_types:
-        if __validate_single(value, type_):
+        if _validate_single(value, type_):
             return True
 
     # if value is not of any of the allowed types raise an error

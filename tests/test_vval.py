@@ -1,7 +1,15 @@
 import pytest
 
 from typing import Callable, Iterable, Union, List, Optional, Dict, Union
-from vval.vval import is_union, is_iterable, is_generic, is_callable, _extract_types
+from vval.vval import (
+    is_union,
+    is_iterable,
+    is_generic,
+    is_callable,
+    _extract_types,
+    _validate_single,
+    ValidationError,
+)
 
 
 def test_is_union():
@@ -94,3 +102,36 @@ def test_extract_types_invalid_input():
 
     with pytest.raises(TypeError):
         _extract_types(["string"])  # String is not a type
+
+
+def test_validate_single_with_valid_types():
+    assert _validate_single(5, int)
+    assert _validate_single("hello", str)
+    assert _validate_single([1, 2, 3], list)
+
+
+def test_validate_single_with_callable():
+    assert _validate_single(lambda x: x, Callable)
+    assert not _validate_single(5, Callable)
+
+
+def test_validate_single_with_invalid_types():
+    assert not _validate_single("hello", int)
+    assert not _validate_single(5, str)
+
+
+def test_validate_single_with_generic_type():
+    with pytest.raises(ValidationError):
+        _validate_single([1, 2, 3], List[int])
+
+
+def test_validate_single_with_invalid_type_argument():
+    with pytest.raises(ValueError):
+        _validate_single(5, "not a type")
+
+
+def test_validate_single_with_callable_function():
+    def example_function():
+        pass
+
+    assert _validate_single(example_function, Callable)
