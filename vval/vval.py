@@ -60,7 +60,7 @@ def is_callable(obj: Any) -> bool:
     return callable(obj)
 
 
-def __extract_types(
+def _extract_types(
     type_iter: Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]],
 ) -> list[type | Type | UnionType]:
     """
@@ -94,14 +94,14 @@ def __extract_types(
         if type_ == Callable:
             types.append(Callable)
         # if type_ is a single type then append it to the list
-        elif isinstance(type_, type) or isinstance(type_, Type):
+        elif isinstance(type_, type) or isinstance(type_, Type) or is_generic(type_):
             types.append(type_)
         # if type_ is a Union get all union types
         elif is_union(type_):
             types += list(get_args(type_))
         # if type_ is an iterable, add all types to types
         elif is_iterable(type_):
-            types += __extract_types(type_)
+            types += _extract_types(type_)
         else:
             raise TypeError(
                 f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'."
@@ -171,7 +171,7 @@ def validate(
             allowed_types += list(get_args(type_))
         else:
             # extract types from type_
-            allowed_types = __extract_types(type_)
+            allowed_types = _extract_types(type_)
     # if type_ is a single type then append it to the list
     elif (
         isinstance(type_, Type)
