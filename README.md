@@ -1,10 +1,31 @@
-# Value Validate (vval)
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://www.munozarturo.com/images/vval-logo-long-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://www.munozarturo.com/images/vval-logo-long-light.svg">
+    <img alt="vval" src="https://www.munozarturo.com/images/vval-logo-long-light.svg" width="50%" height="40%">
+  </picture>
+</p>
+
+<!-- omit from toc -->
+# vval: value validation
 
 The `vval` module provides functions for input validation in python.
 
+<!-- omit from toc -->
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Basic Type Validation](#basic-type-validation)
+  - [Iterable Validation](#iterable-validation)
+  - [Option Validation](#option-validation)
+  - [Filter Validation](#filter-validation)
+- [Functionality Examples](#functionality-examples)
+- [Notes](#notes)
+
 ## Installation
 
-```shell
+```bash
 pip install vval
 ```
 

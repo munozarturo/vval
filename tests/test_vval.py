@@ -8,7 +8,6 @@ from vval.vval import (
     validate_filter,
     is_union,
     is_iterable,
-    is_generic,
     is_callable,
     _extract_types,
     _validate_single,
@@ -41,15 +40,6 @@ def test_is_iterable():
         pass
 
     assert not is_iterable(NonIterable())  # Non-iterable class instances
-
-
-def test_is_generic():
-    assert is_generic(List[int])  # Generic type
-    assert is_generic(Dict[str, int])  # Generic type
-    assert not is_generic(Union[str, int])
-    assert not is_generic(int)  # Not a generic type
-    assert not is_generic(3.14)  # Not a generic type
-    assert not is_generic("hello")  # Not a generic type
 
 
 def test_is_callable():
