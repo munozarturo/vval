@@ -139,10 +139,12 @@ def _validate_single(value: Any, type_: type | Type | Callable) -> bool:
 
 def validate(
     value: Any,
-    type_: type
-    | Type
-    | UnionType
-    | Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]],
+    type_: (
+        type
+        | Type
+        | UnionType
+        | Iterable[type | Type | UnionType | Iterable[type | Type | UnionType]]
+    ),
 ) -> bool:
     """
     Validate that `value` is of type 'type_'.

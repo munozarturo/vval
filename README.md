@@ -22,6 +22,8 @@ The `vval` module provides functions for input validation in python.
   - [Filter Validation](#filter-validation)
 - [Functionality Examples](#functionality-examples)
 - [Notes](#notes)
+- [Testing](#testing)
+- [Packaging](#packaging)
 
 ## Installation
 
@@ -114,3 +116,18 @@ Currently provided functions:
 - `validate_iterable`: Validate that all elements in an iterable are of a specified type.
 - `validate_option`: Validates that a value is among a set of options.
 - `validate_filter`: Validates that a value passes a specified filter function.
+
+## Testing
+
+```bash
+pip install pytest
+python pytest -m
+```
+
+## Packaging
+
+```bash
+pip install --upgrade setuptools wheel twine
+python setup.py sdist bdist_wheel
+twine upload dist/*
+```
