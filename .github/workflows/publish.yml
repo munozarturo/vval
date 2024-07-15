@@ -22,11 +22,11 @@ jobs:
               run: |
                   python -m pip install --upgrade pip
                   pip install build twine
-                  pip install .[dev]  # Install the package and dev dependencies
+                  pip install .[dev]
 
             - name: Run tests
               run: |
-                  pytest tests/  # Run pytest on your tests directory
+                  pytest tests/
 
             - name: Build package
               run: python -m build
