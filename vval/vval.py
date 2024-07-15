@@ -3,8 +3,6 @@ from typing import Callable, Type, Union, Any, get_origin, get_args, Iterable
 from types import UnionType
 from typing_inspect import is_generic_type as is_generic
 
-## some change here
-
 
 class Error(Exception):
     """Base class for exceptions in this module."""
