@@ -6,7 +6,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="vval",
-    version="2.1.4",
+    version="2.1.5",
     author="Arturo Munoz",
     author_email="munoz.arturoroman@gmail.com",
     description="Input validation in Python",
@@ -23,11 +23,11 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords="http, requests, wrapper, retry, timeout",
+    keywords="validation",
     python_requires=">=3.11",
     install_requires=["varname==0.11.0", "typing_inspect==0.8.0"],
     extras_require={
-        "dev": ["pytest", "pytest-cov", "flake8", "black"],
+        "dev": ["pytest", "mypy", "pytest-cov", "flake8", "black"],
         "docs": ["sphinx", "sphinx_rtd_theme"],
     },
     project_urls={
