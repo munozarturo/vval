@@ -180,6 +180,7 @@ This project uses GitHub Actions for Continuous Integration and Continuous Deplo
    Replace `x.y.z` with the new version number.
 
 7. The GitHub Action will automatically build and publish the new version to PyPI.
+
 ### Manual Publishing (if needed)
 
 Prerequisites:
