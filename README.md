@@ -23,7 +23,15 @@ The `vval` module provides functions for input validation in python.
 - [Functionality Examples](#functionality-examples)
 - [Notes](#notes)
 - [Testing](#testing)
-- [Packaging](#packaging)
+- [Packaging and Publishing](#packaging-and-publishing)
+  - [Prerequisites](#prerequisites)
+  - [Building the Package](#building-the-package)
+  - [Checking the Distribution](#checking-the-distribution)
+  - [Uploading to TestPyPI (Optional)](#uploading-to-testpypi-optional)
+  - [Publishing to PyPI](#publishing-to-pypi)
+  - [Versioning](#versioning)
+  - [Git Tagging](#git-tagging)
+  - [Continuous Integration](#continuous-integration)
 
 ## Installation
 
@@ -124,10 +132,75 @@ pip install pytest
 python pytest -m
 ```
 
-## Packaging
+## Packaging and Publishing
+
+This guide will help you package and publish `vval` to PyPI.
+
+### Prerequisites
+
+Ensure you have the latest versions of required tools:
 
 ```bash
-pip install --upgrade setuptools wheel twine
-python setup.py sdist bdist_wheel
+pip install --upgrade setuptools wheel twine build
+```
+
+### Building the Package
+
+1. Clean any existing builds:
+
+    ```bash
+    rm -rf dist build *.egg-info
+    ```
+
+2. Build the package:
+
+    ```bash
+    python -m build
+    ```
+
+This command creates both source (.tar.gz) and wheel (.whl) distributions in the `dist/` directory.
+
+### Checking the Distribution
+
+Before uploading, check if your package description will render correctly on PyPI:
+
+```bash
+twine check dist/*
+```
+
+### Uploading to TestPyPI (Optional)
+
+It's a good practice to test your package on TestPyPI before publishing to the main PyPI:
+
+```bash
+twine upload --repository testpypi dist/*
+```
+
+You can then install your package from TestPyPI to verify it works correctly:
+
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ vval
+```
+
+### Publishing to PyPI
+
+When you're ready to publish to the main PyPI:
+
+```bash
 twine upload dist/*
 ```
+
+### Versioning
+
+Remember to update the version number in `setup.py` before building and publishing a new release. Follow Semantic Versioning guidelines (<https://semver.org/>).
+
+### Git Tagging
+
+After a successful publish, tag your release in git:
+
+git tag v0.1.x  # Replace with your version number
+git push origin v0.1.x
+
+### Continuous Integration
+
+Consider setting up a CI/CD pipeline (e.g., GitHub Actions) to automate testing and deployment processes.
