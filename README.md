@@ -133,8 +133,6 @@ python pytest -m
 
 ## Packaging and Publishing
 
-This guide will help you package and publish `vval` to PyPI.
-
 ### Prerequisites
 
 Ensure you have the latest versions of required tools:
