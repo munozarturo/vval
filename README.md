@@ -22,15 +22,11 @@ The `vval` module provides functions for input validation in python.
   - [Filter Validation](#filter-validation)
 - [Functionality Examples](#functionality-examples)
 - [Notes](#notes)
-- [Testing](#testing)
-- [Packaging and Publishing](#packaging-and-publishing)
-  - [Prerequisites](#prerequisites)
-  - [Building the Package](#building-the-package)
-  - [Checking the Distribution](#checking-the-distribution)
-  - [Uploading to TestPyPI (Optional)](#uploading-to-testpypi-optional)
-  - [Publishing to PyPI](#publishing-to-pypi)
-  - [Versioning](#versioning)
-  - [Git Tagging](#git-tagging)
+- [Development and Publishing](#development-and-publishing)
+  - [Testing](#testing)
+  - [CI/CD](#cicd)
+  - [Publishing a New Version](#publishing-a-new-version)
+  - [Manual Publishing (if needed)](#manual-publishing-if-needed)
 
 ## Installation
 
@@ -124,76 +120,68 @@ Currently provided functions:
 - `validate_option`: Validates that a value is among a set of options.
 - `validate_filter`: Validates that a value passes a specified filter function.
 
-## Testing
+## Development and Publishing
+
+### Testing
+
+Run tests locally:
 
 ```bash
-pip install pytest
-python pytest -m
+pip install .[dev]
+pytest
 ```
 
-## Packaging and Publishing
+### CI/CD
 
-### Prerequisites
+This project uses GitHub Actions for Continuous Integration and Continuous Deployment:
 
-Ensure you have the latest versions of required tools:
+1. **Pull Request Checks**: Automatically run tests on all pull requests to the main branch.
+2. **Automated Publishing**: Triggers package build and publication to PyPI when a new version tag is pushed.
+
+### Publishing a New Version
+
+1. Update the version in `setup.py` following [Semantic Versioning](https://semver.org/).
+
+2. Commit changes:
+
+   ```bash
+   git add setup.py
+   git commit -m "pack: bump version to x.y.z"
+   ```
+
+3. Tag and push:
+
+   ```bash
+   git tag vx.y.z
+   git push origin main vx.y.z
+   ```
+
+   Replace `x.y.z` with the new version number.
+
+4. The GitHub Action will automatically build and publish the new version to PyPI.
+
+### Manual Publishing (if needed)
+
+Prerequisites:
 
 ```bash
 pip install --upgrade setuptools wheel twine build
 ```
 
-### Building the Package
-
-1. Clean any existing builds:
-
-    ```bash
-    rm -rf dist build *.egg-info
-    ```
-
-2. Build the package:
-
-    ```bash
-    python -m build
-    ```
-
-This command creates both source (.tar.gz) and wheel (.whl) distributions in the `dist/` directory.
-
-### Checking the Distribution
-
-Before uploading, check if your package description will render correctly on PyPI:
+Build and publish:
 
 ```bash
+rm -rf dist build *.egg-info
+python -m build
 twine check dist/*
-```
-
-### Uploading to TestPyPI (Optional)
-
-It's a good practice to test your package on TestPyPI before publishing to the main PyPI:
-
-```bash
-twine upload --repository testpypi dist/*
-```
-
-You can then install your package from TestPyPI to verify it works correctly:
-
-```bash
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ vval
-```
-
-### Publishing to PyPI
-
-When you're ready to publish to the main PyPI:
-
-```bash
 twine upload dist/*
 ```
 
-### Versioning
+For TestPyPI (optional):
 
-Remember to update the version number in `setup.py` before building and publishing a new release. Follow Semantic Versioning guidelines (<https://semver.org/>).
+```bash
+twine upload --repository testpypi dist/*
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ wreqs
+```
 
-### Git Tagging
-
-After a successful publish, tag your release in git:
-
-git tag v0.1.x  # Replace with your version number
-git push origin v0.1.x
+Note: Manual publishing should only be necessary if the automated process fails.
