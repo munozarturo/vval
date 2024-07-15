@@ -6,7 +6,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="vval",
-    version="2.1.7",
+    version="2.1.8",
     author="Arturo Munoz",
     author_email="munoz.arturoroman@gmail.com",
     description="Input validation in Python",
