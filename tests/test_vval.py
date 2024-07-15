@@ -232,7 +232,7 @@ def test_validate_option_with_invalid_value():
 
 def test_validate_option_with_non_iterable_options():
     with pytest.raises(TypeError):
-        validate_option("apple", "not an iterable")
+        validate_option("apple", 5)
 
 
 def test_validate_option_with_empty_options():
