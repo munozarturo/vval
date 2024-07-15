@@ -141,40 +141,40 @@ This project uses GitHub Actions for Continuous Integration and Continuous Deplo
 
 1. Create a new branch for the version bump:
 
-   """bash
+   ```bash
    git checkout -b bump-version-x.y.z
-   """
+   ```
 
 2. Update the version in `setup.py` following [Semantic Versioning](https://semver.org/).
 
 3. Commit changes:
 
-   """bash
+   ```bash
    git add setup.py
    git commit -m "pack: bump version to x.y.z"
-   """
+   ```
 
 4. Push the branch and create a pull request:
 
-   """bash
+   ```bash
    git push origin bump-version-x.y.z
-   """
+   ```
 
    Then create a pull request on GitHub from this branch to main.
 
 5. After the pull request is approved and merged, checkout and pull the updated main branch:
 
-   """bash
+   ```bash
    git checkout main
    git pull origin main
-   """
+   ```
 
 6. Create and push a new tag:
 
-   """bash
+   ```bash
    git tag vx.y.z
    git push origin vx.y.z
-   """
+   ```
 
    Replace `x.y.z` with the new version number.
 
