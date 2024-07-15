@@ -6,7 +6,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="vval",
-    version="2.1.1",
+    version="2.1.2",
     author="Arturo Munoz",
     author_email="munoz.arturoroman@gmail.com",
     description="Input validation in Python",
@@ -31,7 +31,7 @@ setup(
         "docs": ["sphinx", "sphinx_rtd_theme"],
     },
     project_urls={
-        "Bug Reports": "https://github.com/munozarturo/wreqs/issues",
-        "Source": "https://github.com/munozarturo/wreqs/",
+        "Bug Reports": "https://github.com/munozarturo/vval/issues",
+        "Source": "https://github.com/munozarturo/vval/",
     },
 )
