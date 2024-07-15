@@ -22,10 +22,5 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install .[dev]
 
-            - name: Start Flask Server
-              run: |
-                  python tests/app.py &
-                  sleep 1
-
             - name: Run tests
               run: pytest tests/

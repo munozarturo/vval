@@ -38,11 +38,6 @@ jobs:
                   pip install build twine
                   pip install .[dev]
 
-            - name: Start Flask Server
-              run: |
-                  python tests/app.py &
-                  sleep 1
-
             - name: Run tests
               run: |
                   pytest tests/
