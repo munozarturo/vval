@@ -81,7 +81,7 @@ def _extract_types(
     # validate iterable
     if not isinstance(type_iter, Iterable) or isinstance(type_iter, (str, bytes)):
         raise TypeError(
-            f"Expected 'Iterable' for `type_iter` got: '{type(type_iter)}'."
+            f"Expected `Iterable` for `type_iter` got: `{type(type_iter)}`."
         )
 
     # list of types
@@ -90,7 +90,7 @@ def _extract_types(
     # iterate over type_iter
     for type_ in type_iter:
         # check if type_ is callable first because non generic use
-        # raises errors; but can't be type checked
+        # raises errors; but can`t be type checked
         if type_ == Callable:
             types.append(Callable)
         # if type_ is a single type then append it to the list
@@ -104,7 +104,7 @@ def _extract_types(
             types += _extract_types(type_)
         else:
             raise TypeError(
-                f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'."
+                f"Expected `type`, `Type`, `UnionType`, or `Iterable[type | Type | UnionType]` for `type_` got: `{type_}`."
             )
 
     # return types
@@ -122,9 +122,9 @@ def _validate_single(value: Any, type_: type | Type | Callable) -> bool:
     Returns:
         bool: True if `value` is of type `type_`.
     """
-    # check if type is generic, because generic types can't be validated
+    # check if type is generic, because generic types can`t be validated
     if is_generic(type_):
-        raise ValidationError(f"Can't validate generic type: '{type_}'.")
+        raise ValidationError(f"Can`t validate generic type: `{type_}`.")
 
     # if type_ is callable check if it is callable
     if type_ == Callable:
@@ -134,7 +134,7 @@ def _validate_single(value: Any, type_: type | Type | Callable) -> bool:
         return isinstance(value, type_)
     else:
         # else raise an error
-        raise ValueError(f"Expected 'type' or 'Type' for `type_` got: '{type(type_)}'.")
+        raise ValueError(f"Expected `type` or `Type` for `type_` got: `{type(type_)}`.")
 
 
 def validate(
@@ -147,12 +147,12 @@ def validate(
     ),
 ) -> bool:
     """
-    Validate that `value` is of type 'type_'.
+    Validate that `value` is of type `type_`.
 
     Args:
         value (Any): Value to be checked.
         type_ (type | Type | UnionType | Iterable[type | Type | UnionType]): Valid type(s).
-        allow_none (bool, optional): Whether to allow 'None'. Defaults to False.
+        allow_none (bool, optional): Whether to allow `None`. Defaults to False.
 
     Returns:
         bool: True if `value` is of type `type_`.
@@ -181,7 +181,7 @@ def validate(
         allowed_types.append(type_)
     else:
         raise TypeError(
-            f"Expected 'type', 'Type', 'UnionType', or 'Iterable[type | Type | UnionType]' for `type_` got: '{type_}'."
+            f"Expected `type`, `Type`, `UnionType`, or `Iterable[type | Type | UnionType]` for `type_` got: `{type_}`."
         )
 
     # check if value is of any of the allowed types
@@ -198,7 +198,7 @@ def validate(
         var_name: str = "value"
 
     raise TypeError(
-        f"Expected '{_expected}' for `{var_name}`, got: '{type(value).__name__}'."
+        f"Expected `{_expected}` for `{var_name}`, got: `{type(value).__name__}`."
     )
 
 
@@ -222,7 +222,7 @@ def validate_iterable(
     # if iter_ is not an iterable raise an error
     if not is_iterable(iter_):
         raise TypeError(
-            f"Expected 'Iterable' for `iter_`, got: '{type(iter_).__name__}'."
+            f"Expected `Iterable` for `iter_`, got: `{type(iter_).__name__}`."
         )
 
     # validate every value in iter against type_
@@ -247,12 +247,14 @@ def validate_option(value: Any, options: Iterable[Any]) -> None:
     # if options is not an iterable raise an error
     if not isinstance(options, Iterable):
         raise TypeError(
-            f"Expected 'Iterable' for `options`, got: '{type(options).__name__}'."
+            f"Expected `Iterable` for `options`, got: `{type(options).__name__}`."
         )
 
     # raise an error if value is not in options
     if value not in options:
-        raise ValueError(f"Expected one of {','.join(options)}, got: '{value}'.")
+        raise ValueError(
+            f"Expected one of {','.join([f'`{str(v)}`' for v in options])}, got: `{value}`."
+        )
 
 
 def validate_filter(value: Any, filter: Callable[[Any], bool]) -> None:
@@ -269,12 +271,12 @@ def validate_filter(value: Any, filter: Callable[[Any], bool]) -> None:
     # if filter is not callable
     if not is_callable(filter):
         raise TypeError(
-            f"Expected 'Callable' for `filter`, got: '{type(filter).__name__}'."
+            f"Expected `Callable` for `filter`, got: `{type(filter).__name__}`."
         )
 
     if not filter(value):
         # Attempt to get the name of the filter function
         filter_name = getattr(filter, "__name__", str(filter))
         raise ValueError(
-            f"The value '{value}' does not pass the filter condition defined by '{filter_name}'."
+            f"The value `{value}` does not pass the filter condition defined by `{filter_name}`."
         )
