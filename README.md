@@ -142,7 +142,7 @@ This project uses GitHub Actions for Continuous Integration and Continuous Deplo
 1. Create a new branch for the version bump:
 
    ```bash
-   git checkout -b bump-version-x.y.z
+   git checkout -b bump-vx.y.z
    ```
 
 2. Update the version in `setup.py` following [Semantic Versioning](https://semver.org/).
@@ -154,28 +154,31 @@ This project uses GitHub Actions for Continuous Integration and Continuous Deplo
    git commit -m "pack: bump version to x.y.z"
    ```
 
-4. Push the branch and create a pull request:
-
-   ```bash
-   git push origin bump-version-x.y.z
-   ```
-
-   Then create a pull request on GitHub from this branch to main.
-
-5. After the pull request is approved and merged, checkout and pull the updated main branch:
-
-   ```bash
-   git checkout main
-   git pull origin main
-   ```
-
-6. Create and push a new tag:
+4. Create and push a new tag on the bump branch:
 
    ```bash
    git tag vx.y.z
-   git push origin vx.y.z
+   git push origin bump-vx.y.z --tags
    ```
 
    Replace `x.y.z` with the new version number.
 
-7. The GitHub Action will automatically build, test, and publish the new version to PyPI.
+5. Push the branch and create a pull request:
+
+   ```bash
+   git push origin bump-vx.y.z
+   ```
+
+   Then create a pull request on GitHub from this branch to main.
+
+6. After the pull request is approved and merged, the tag will be part of the main branch.
+
+7. To publish the new version to PyPI:
+   - Go to the "Actions" tab in your GitHub repository
+   - Select the "Publish Python distribution to PyPI" workflow
+   - Click "Run workflow"
+   - Enter the version tag you created (e.g., v1.2.3) and click "Run workflow"
+
+8. The GitHub Action will build, test, and publish the new version to PyPI based on the specified tag.
+
+Note: This process allows you to control exactly when the package is published. You can create and push tags on feature branches without triggering the publish process, and you can choose to publish specific tags at any time using the manual workflow trigger. The tag becomes part of the main branch history when the pull request is merged.
